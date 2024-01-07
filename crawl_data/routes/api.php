@@ -20,3 +20,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 Route::get('crawl-assets', [CrawlController::class, 'crawlAssets']);
 Route::get('subnet3-cal', [CrawlController::class, 'subnet_3_calculate']);
+Route::post('importData', [\App\Http\Controllers\ScoreBoardController::class, 'importData']);
+Route::post('getLastDeploymentScenario', [\App\Http\Controllers\ScoreBoardController::class, 'getLastDeploymentScenario']);

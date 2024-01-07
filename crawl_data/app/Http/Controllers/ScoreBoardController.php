@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 
+use Illuminate\Http\Client\Response;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\URL;
+use function MongoDB\BSON\ObjectId;
 
 class ScoreBoardController extends Controller
 {
@@ -77,5 +81,279 @@ class ScoreBoardController extends Controller
             }
         }
         return view('detail',['data'=>$data_map]);
+    }
+    public function importData(Request $request) {
+        $number =  rand ( 100 , 999 );
+        // Test database connection
+        $data = [
+            "createdBy" => "644fbf5307b8766e6fd88b9e",
+            "updatedBy" => "644fbf5307b8766e6fd88b9e",
+            "name" => "TEST_ID=". time(),
+            "description" => "Description TEST_ID=". time(),
+            "status" => "Operations",
+            "systemProfileId" => "64b29e5419c695b9e3242b77",
+            "systemProfileName" => "Unraveled",
+            "securityGoals" => [
+                [
+                    "id" => 4,
+                    "name" => "Dữ liệu được bảo vệ",
+                    "description" => "Dữ liệu được bảo mật",
+                    "assetId" => "6450bd0bb71968d0d9cf4d1c",
+                    "confidentiality" => "HIGH",
+                    "integrity" => "LOW",
+                    "availability" => "LOW"
+                ],
+                [
+                    "id" => 5,
+                    "name" => "Hệ cơ sở dữ liệu luôn sẵn sàng",
+                    "description" => "Dữ liệu luôn sẵn sàng",
+                    "assetId" => "6450bd0bb71968d0d9cf4d1c",
+                    "confidentiality" => "HIGH",
+                    "integrity" => "MEDIUM",
+                    "availability" => "HIGH"
+                ],
+                [
+                    "id" => 6,
+                    "name" => "Dữ liệu được mã hóa đầy đủ",
+                    "description" => "Dữ liệu cá nhân của người dùng phải được mã hóa trước khi lưu",
+                    "assetId" => "6450bd0bb71968d0d9cf4d1c",
+                    "confidentiality" => "HIGH",
+                    "integrity" => "HIGH",
+                    "availability" => "LOW"
+                ],
+                [
+                    "id" => 7,
+                    "name" => "Quyền root trên CSDL được bảo vệ",
+                    "description" => "Đảm bảo quyền root được bảo vệ",
+                    "assetId" => "6450bd0bb71968d0d9cf4d1c",
+                    "confidentiality" => "HIGH",
+                    "integrity" => "HIGH",
+                    "availability" => "HIGH"
+                ],
+                [
+                    "id" => 8,
+                    "name" => "Máy chủ Web luôn họat động 24/7",
+                    "description" => "Luôn luôn hoạt động",
+                    "assetId" => "64605d26303473f151ff9009",
+                    "confidentiality" => "LOW",
+                    "integrity" => "MEDIUM",
+                    "availability" => "HIGH"
+                ],
+                [
+                    "id" => 5,
+                    "name" => "Máy chủ Web có khả năng tự điều phối giao tiếp",
+                    "description" => "Máy chủ hoạt động tốt",
+                    "assetId" => "64605d26303473f151ff9009",
+                    "confidentiality" => "LOW",
+                    "integrity" => "MEDIUM",
+                    "availability" => "HIGH"
+                ],
+                [
+                    "id" => 6,
+                    "name" => "Preventing buffer overflows",
+                    "description" => "Preventing buffer overflows",
+                    "assetId" => "64b29e1c7547af07cfdec81a",
+                    "confidentiality" => "HIGH",
+                    "integrity" => "HIGH",
+                    "availability" => "HIGH"
+                ]
+            ],
+            "assets" => [
+                [
+                    "id" => "6450bd0bb71968d0d9cf4d1c",
+                    "name" => "database server",
+                    "part" => "a",
+                    "vendor" => "MariaDB",
+                    "product" => "MariaDB",
+                    "version" => "10.0.38",
+                    "cpe" => "cpe:2.3:a:mariadb:mariadb:10.0.38:*:*:*:*:*:*:*"
+                ],
+                [
+                    "id" => "64605d26303473f151ff9009",
+                    "name" => "web server",
+                    "part" => "a",
+                    "vendor" => "Apache",
+                    "product" => "Apache Tomcat",
+                    "version" => "9.0.62",
+                    "cpe" => "cpe:2.3:a:apache:tomcat:9.0.62:*:*:*:*:*:*:*"
+                ],
+                [
+                    "id" => "64b273a375f945d248cec247",
+                    "name" => "computer window",
+                    "part" => "o",
+                    "vendor" => "Microsoft",
+                    "product" => "Windows 10",
+                    "version" => "1909",
+                    "cpe" => "cpe:2.3:o:microsoft:windows_10:1909:*:*:*:*:*:x64:*"
+                ],
+                [
+                    "id" => "64b273c475f945d248cec24b",
+                    "name" => "computer ubuntu",
+                    "part" => "o",
+                    "vendor" => "Canonical",
+                    "product" => "Ubuntu",
+                    "version" => "18.04 LTS",
+                    "cpe" => "cpe:2.3:o:canonical:ubuntu_linux:18.04:*:*:*:lts:*:*:*"
+                ],
+                [
+                    "id" => "64b29e1c7547af07cfdec81a",
+                    "name" => "SFTP server",
+                    "part" => "a",
+                    "vendor" => "Green End",
+                    "product" => "SFTP server",
+                    "version" => "0.2.1",
+                    "cpe" => "cpe:2.3:a:greenend:sftpserver:0.2.1:*:*:*:*:*:*:*"
+                ],
+                [
+                    "id" => "64b7ad20400c275283e3edcf",
+                    "name" => "honeypot server",
+                    "part" => "a",
+                    "vendor" => "Apache",
+                    "product" => "HTTP server",
+                    "version" => "0.8.11",
+                    "cpe" => "cpe:2.3:a:apache:http_server:0.8.11:*:*:*:*:*:*:*"
+                ]
+            ],
+            "assetRelationships" => [
+                [
+                    "id" => 1,
+                    "source" => "64b273a375f945d248cec247",
+                    "target" => "64b273c475f945d248cec24b",
+                    "accessVector" => "NETWORK",
+                    "privilege" => "NONE"
+                ],
+                [
+                    "id" => 2,
+                    "source" => "64b273c475f945d248cec24b",
+                    "target" => "64605d26303473f151ff9009",
+                    "accessVector" => "NETWORK",
+                    "privilege" => "APP_USER"
+                ],
+                [
+                    "id" => 3,
+                    "source" => "64605d26303473f151ff9009",
+                    "target" => "6450bd0bb71968d0d9cf4d1c",
+                    "accessVector" => "ADJACENT_NETWORK",
+                    "privilege" => "APP_USER"
+                ],
+                [
+                    "id" => 4,
+                    "source" => "64605d26303473f151ff9009",
+                    "target" => "64b29e1c7547af07cfdec81a",
+                    "accessVector" => "NETWORK",
+                    "privilege" => "APP_USER"
+                ],
+                [
+                    "id" => 5,
+                    "source" => "64b273a375f945d248cec247",
+                    "target" => "64b7ad20400c275283e3edcf",
+                    "accessVector" => "NETWORK",
+                    "privilege" => "NONE"
+                ],
+                [
+                    "id" => 6,
+                    "source" => "64b273c475f945d248cec24b",
+                    "target" => "64b7ad20400c275283e3edcf",
+                    "accessVector" => "NETWORK",
+                    "privilege" => "NONE"
+                ]
+            ],
+            "countermeasures" => [
+                [
+                    "oid" => "64b7e0c6c8dd72612b8cc52a"
+                ]
+            ],
+            "attackers" => [
+                [
+                    "oid" => "64b7b757c8dd72612b8cc39a"
+                ]
+            ],
+            "cves" => [
+                [
+                    "oid" => "64b7b75fc8dd72612b8cc3a9"
+                ],
+                [
+                    "oid" => "64b7b764c8dd72612b8cc3b7"
+                ],
+                [
+                    "oid" => "64b7b768c8dd72612b8cc3c5"
+                ],
+                [
+                    "oid" => "64b7b772c8dd72612b8cc3d3"
+                ],
+                [
+                    "oid" => "64b7b77bc8dd72612b8cc3e1"
+                ],
+                [
+                    "oid" => "64b7b785c8dd72612b8cc3ef"
+                ],
+                [
+                    "oid" => "64b7b797c8dd72612b8cc40d"
+                ],
+                [
+                    "oid" => "64b7b79bc8dd72612b8cc41b"
+                ],
+                [
+                    "oid" => "64b7b7dac8dd72612b8cc42d"
+                ],
+                [
+                    "oid" => "64b7b7f2c8dd72612b8cc43b"
+                ],
+                [
+                    "oid" => "64b7bad9c8dd72612b8cc450"
+                ],
+                [
+                    "oid" => "659941cff63e9b3bfa97b7e2"
+                ],
+                [
+                    "oid" => "659950a3f63e9b3bfa97bbd9"
+                ],
+                [
+                    "oid" => "65996499f63e9b3bfa97bd8f"
+                ]
+            ],
+            "exploitability" => "High",
+            "remediationLevel" => "Unavailable",
+            "reportConfidence" => "Confirmed",
+            "createdAt" => [
+                "date" => "2023-07-19T10:12:50.844Z"
+            ],
+            "updatedAt" => [
+                "date" => "2024-01-06T15:08:52.438Z"
+            ],
+            "__v" => 178,
+            "attackGraph" => [
+                "nodes" => [],
+                "edges" => []
+            ],
+            "baseBenefit" => 100,
+            "baseImpact" => 100,
+            "benefitCriterion" => 100,
+            "damageCriterion" => 100,
+            "deploymentScenarioId" => "64b7b722c8dd72612b8cc395",
+            "id" => "64b7b722c8dd72612b8cc395"
+        ];
+        try {
+            $deploymentScenarioId = DB::table('deploymentscenarios')->insertGetId($data);
+            if(!$deploymentScenarioId) throw new \Exception('deploymentscenarios create failed');
+            $deploymentScenario = DB::table('deploymentscenarios')->find($deploymentScenarioId);
+            return response()->json([
+                "data" => $deploymentScenario,
+                "status" => "success"
+            ]);
+        }catch (\Exception $e) {
+            return response()->json([
+                "data" => [],
+                "status" => "failed",
+                "msg" => $e->getMessage()
+            ], 400);
+        }
+    }
+    public function getLastDeploymentScenario(Request $request) {
+        $deploymentScenario = DB::table('deploymentscenarios')->orderBy('createdAt','DESC')->first();
+        return response()->json([
+            "data" => $deploymentScenario,
+            "status" => "success"
+        ]);
     }
 }
