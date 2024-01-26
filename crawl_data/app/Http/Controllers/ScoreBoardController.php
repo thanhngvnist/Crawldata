@@ -8,11 +8,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\URL;
-<<<<<<< Updated upstream
 use function MongoDB\BSON\ObjectId;
-=======
 use App\Models\cve;
->>>>>>> Stashed changes
+
 
 class ScoreBoardController extends Controller
 {
