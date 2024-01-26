@@ -92,23 +92,29 @@ return [
             // 'encrypt' => env('DB_ENCRYPT', 'yes'),
             // 'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'false'),
         ],
-        'mongodb' => [
+        'mongodb1' => [
             'driver'   => 'mongodb',
-            'host'     => env('DB_HOST', 'localhost'),
-            'port'     => env('DB_PORT', 27017),
-            'database' => env('DB_DATABASE', 'your_database'),
-            'username' => env('DB_USERNAME', 'your_username'),
-            'password' => env('DB_PASSWORD', 'your_password'),
+            'host'     => env('MONGODB_HOST1', 'localhost'),
+            'port'     => env('MONGODB_PORT1', 27017),
+            'database' => env('MONGODB_DATABASE1'),
+            'username' => env('MONGODB_USERNAME1'),
+            'password' => env('MONGODB_PASSWORD1'),
             'options'  => [
-                'database' => 'admin', // set the authentication database
+                'database' => env('MONGODB_AUTHDATABASE1', 'admin'), // Authentication database for MongoDB 3.6+
             ],
         ],
-    //     'mongodb' => [
-    //         'driver' => 'mongodb',
-    //         'dsn' => env('DB_URI', 'mongodb+srv://username:password@<atlas-cluster-uri>/myappdb?retryWrites=true&w=majority'),
-    //         'database' => 'Database',
-    // ],
-
+    
+        'mongodb2' => [
+            'driver'   => 'mongodb',
+            'host'     => env('MONGODB_HOST2', 'localhost'),
+            'port'     => env('MONGODB_PORT2', 27017),
+            'database' => env('MONGODB_DATABASE2'),
+            'username' => env('MONGODB_USERNAME2'),
+            'password' => env('MONGODB_PASSWORD2'),
+            'options'  => [
+                'database' => env('MONGODB_AUTHDATABASE2', 'admin'), // Authentication database for MongoDB 3.6+
+            ],
+        ],
     ],
 
     /*
