@@ -458,9 +458,9 @@ class ScoreBoardController extends Controller
             "id" => "64b7b722c8dd72612b8cc395"
         ];
         try {
-            $deploymentScenarioId = DB::table('deploymentscenarios')->insertGetId($data);
+            $deploymentScenarioId = DB::connection('mongodb1')->collection('deploymentscenarios')->insertGetId($data);
             if(!$deploymentScenarioId) throw new \Exception('deploymentscenarios create failed');
-            $deploymentScenario = DB::table('deploymentscenarios')->find($deploymentScenarioId);
+            $deploymentScenario = DB::connection('mongodb1')->collection('deploymentscenarios')->find($deploymentScenarioId);
             return response()->json([
                 "data" => $deploymentScenario,
                 "status" => "success"
@@ -474,7 +474,7 @@ class ScoreBoardController extends Controller
         }
     }
     public function getLastDeploymentScenario(Request $request) {
-        $deploymentScenario = DB::table('deploymentscenarios')->orderBy('createdAt','DESC')->first();
+        $deploymentScenario = DB::connection('mongodb1')->collection('deploymentscenarios')->orderBy('createdAt','DESC')->first();
         return response()->json([
             "data" => $deploymentScenario,
             "status" => "success"

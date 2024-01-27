@@ -18,7 +18,9 @@
                     <?php
                     $general_point = 0;
                     foreach($data as $point) {
-                        $general_point += round($point['medium_score'], 1) * 10;
+                        if(round($point['medium_score'], 1) * 10 > $general_point) {
+                            $general_point = round($point['medium_score'], 1) * 10;
+                        }
                     }
                     $general_point = round($general_point/ count($data));
                     echo($general_point);
