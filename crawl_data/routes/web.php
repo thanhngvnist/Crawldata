@@ -18,4 +18,3 @@ use Illuminate\Support\Facades\Route;
 //});
 Route::get('/',[\App\Http\Controllers\ScoreBoardController::class, 'index']);
 Route::get('/detail',[\App\Http\Controllers\ScoreBoardController::class, 'detail']);
-Route::post('/detail',[\App\Http\Controllers\ScoreBoardController::class, 'store']);
