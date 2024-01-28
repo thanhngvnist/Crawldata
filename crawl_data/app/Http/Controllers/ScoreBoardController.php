@@ -40,7 +40,10 @@ class ScoreBoardController extends Controller
             $total = count($item);
             foreach ($item as $data) {
                 if(!empty($data_detail[$key]) && in_array($data['id'], $data_detail[$key])){
-                    $point += $data['point'];
+                    $Acurr = $data['point'];    
+                    if($Acurr >= $point) { // lấy điểm cao nhất
+                       $point = $data['point'];
+                    }   
                 }
                 
             }
@@ -49,7 +52,7 @@ class ScoreBoardController extends Controller
                     "name" => $key === "log_management_list" ? "Log management":($key === "vulnerability_management_list" ? "Vulnerability management":
                         ($key === "security_awareness_training_list" ? "Security awareness training":"Incident response plan")),
                     "point" => $point,
-                    "medium_score" => $point / count($item),
+                    "medium_score" => $point,
                     "total" => count($item)
                 ];
             }
